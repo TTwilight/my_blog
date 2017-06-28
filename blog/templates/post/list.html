@@ -3,19 +3,32 @@
     My Blog List
 {% endblock %}
 {% block content %}
+    {% if tag %}
+        <h2>Posts tagged with "{{ tag.name }}"</h2>
+    {% endif %}
+
     {% for post in posts %}
         <h2>
             <a href="{{ post.get_absolute_url }}">{{ post.title}}</a>
         </h2>
+        <p class="'tags">
+            Tags:
+            {% for tag in post.tags.all %}
+                <a href="{% url 'blog:post_list_by_tag' tag.slug%}">
+                {{ tag.name }}
+                </a>
+                {% if not forloop.last %},{% endif %}
+            {% endfor %}
+        </p>
         <p class="date">
             Published {{ post.publish }} by {{ post.author }}
         </p>
         {{ post.body | truncatechars:30 | linebreaks}}
 {#        限制显示30个字符，linebreaks用来将内容中的换行符转换为html中的换行符#}
     {% endfor %}
-{#    {% include 'pagination.html' with page=posts %}#}
+    {% include 'pagination.html' with page=posts %}
 {#    未使用基于类的视图时，这里的page应该为page对象，所以需要传入posts #}
-      {% include 'pagination.html' with page=page_obj %}
+{#      {% include 'pagination.html' with page=page_obj %}#}
 {#    由于使用基于类的视图，所以没有返回值posts，所以page=page_obj ,因为Django的ListView通过叫做page_obj#}
 {#    的变量来传递被选择的页面       #}
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post,Comment
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
@@ -12,5 +12,11 @@ class PostAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'        #在搜索框下面添加一个通过时间快速导航的栏目
     ordering = ['status', 'publish']  #使文章默认按照status，publish排序
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'post', 'created', 'active')
+    list_filter = ('updated','created','active')
+    search_fields = ('name','email','body')
+
 admin.site.register(Post,PostAdmin)
+admin.site.register(Comment,CommentAdmin)
 

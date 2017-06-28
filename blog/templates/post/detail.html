@@ -12,9 +12,44 @@
     Published {{ post.publish }} by {{ post.author }}
   </p>
   {{ post.body|linebreaks }}
-{#  <p>#}
-{#  <a href="{% url "blog:post_share" post.id %}">#}
-{#    Share this post#}
-{#  </a>#}
-{#    </p>#}
+{#    显示分享链接    #}
+  <p>
+  <a href="{% url "blog:post_share" post.id %}">
+    Share this post
+  </a>
+  </p>
+{#    显示相似标签帖子  #}
+    <h2>Similar Posts</h2>
+    {% for post in similar_posts %}
+        <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+    {% empty %}
+        There are no similar posts yet.
+    {% endfor %}
+{#    显示评论   #}
+    {% with comments.count as total_comments %}
+        <h2>
+        {{ total_comments }} comment{{ total_comments|pluralize }}
+        </h2>
+    {% endwith %}
+    {% for comment in comments %}
+        <div class="comment">
+            <p class="info">
+                comment {{ forloop.counter }} by {{ comment.name }}
+                {{ comment.created }}
+            </p>
+            {{ comment.body|linebreaks }}
+        </div>
+    {% empty %}
+        <p>There are comments now.</p>
+    {% endfor %}
+    {% if new_comment %}
+        <h2>Your comment has been added.</h2>
+    {% else %}
+        <h2>Add a new comment now.</h2>
+        <form method="post" action=".">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <p><input type="submit" value="Add comment" /></p>
+        </form>
+    {% endif %}
 {% endblock %}
