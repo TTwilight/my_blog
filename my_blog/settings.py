@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'my_blog',
         'USER':'root',
-        'PASSWORD':'lpl2016val',
+        'PASSWORD':'passwd',
         'HOST':'127.0.0.1',
         'PORT':'',
     }
@@ -132,7 +132,7 @@ STATIC_URL = '/static/'
 
 
 EMAIL_HOST = 'smtp.qq.com'
-EMAIL_HOST_USER = '1063255195@qq.com'
+EMAIL_HOST_USER = 'teeee@qq.com'
 EMAIL_HOST_PASSWORD = 'ldmpfsgnqkbdbbgb'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
