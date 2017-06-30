@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load blog_tags %}
 <h2>
     {% block title %}
     {{ post.title }}
@@ -11,7 +11,8 @@
   <p class="date">
     Published {{ post.publish }} by {{ post.author }}
   </p>
-  {{ post.body|linebreaks }}
+{#    {{ post.body|markdown }}   不能达到预期效果,等待解决  #}
+  {{ post.body|linebreaks }}    {#  不使用markdown时  #}
 {#    显示分享链接    #}
   <p>
   <a href="{% url "blog:post_share" post.id %}">

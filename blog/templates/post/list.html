@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load blog_tags %}
 {% block title %}
     My Blog List
 {% endblock %}
@@ -23,7 +24,10 @@
         <p class="date">
             Published {{ post.publish }} by {{ post.author }}
         </p>
-        {{ post.body | truncatechars:30 | linebreaks}}
+
+{#        {{ post.body |markdown |truncatewords_html:30 }}   不能达到预期效果,等待解决  #}
+
+        {{ post.body | truncatechars:30 | linebreaks}}    {#  不使用markdown #}
 {#        限制显示30个字符，linebreaks用来将内容中的换行符转换为html中的换行符#}
     {% endfor %}
     {% include 'pagination.html' with page=posts %}
